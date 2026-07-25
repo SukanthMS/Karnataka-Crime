@@ -1,9 +1,10 @@
 # Dependencies
-node_modules/
+frontend/node_modules/
 .pnpm-store/
 
 # Production build
-dist/
+frontend/dist/
+frontend/.vite/
 
 # Local env files
 .env
@@ -18,3 +19,7 @@ pnpm-debug.log*
 
 # Large un-split data files
 **/ncrb_ipc_master.json
+
+# Backend — large raw datasets (already tracked or intentionally excluded)
+backend/datasets/
+backend/output/
