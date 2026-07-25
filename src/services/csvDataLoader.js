@@ -83,6 +83,63 @@ export const loadDistrictGeoJSON = async () => {
   }
 };
 
+let cachedDistrictMaster = null;
+export const loadDistrictCrimeMaster = async () => {
+  if (cachedDistrictMaster) return cachedDistrictMaster;
+  try {
+    const response = await fetch('/data/district_crime_master.json');
+    const data = await response.json();
+    cachedDistrictMaster = data;
+    return data;
+  } catch (err) {
+    console.error("Failed to load district crime master:", err);
+    return [];
+  }
+};
+
+let cachedMonthlyReview = null;
+export const loadMonthlyCrimeReview = async () => {
+  if (cachedMonthlyReview) return cachedMonthlyReview;
+  try {
+    const response = await fetch('/data/monthly_crime_review.json');
+    const data = await response.json();
+    cachedMonthlyReview = data;
+    return data;
+  } catch (err) {
+    console.error("Failed to load monthly crime review:", err);
+    return [];
+  }
+};
+
+let cachedDemographics = null;
+export const loadDemographicsCensus = async () => {
+  if (cachedDemographics) return cachedDemographics;
+  try {
+    const response = await fetch('/data/demographics_census.json');
+    const data = await response.json();
+    cachedDemographics = data;
+    return data;
+  } catch (err) {
+    console.error("Failed to load demographics census:", err);
+    return [];
+  }
+};
+
+let cachedNcrbMaster = null;
+export const loadNcrbIpcMaster = async () => {
+  if (cachedNcrbMaster) return cachedNcrbMaster;
+  try {
+    const response = await fetch('/data/ncrb_ipc_master.json');
+    const data = await response.json();
+    cachedNcrbMaster = data;
+    return data;
+  } catch (err) {
+    console.error("Failed to load NCRB IPC master:", err);
+    return [];
+  }
+};
+
+
 /**
  * Compute key dashboard metrics dynamically from FIR dataset
  */

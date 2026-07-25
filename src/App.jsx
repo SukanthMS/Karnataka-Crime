@@ -10,6 +10,7 @@ import { AiPredictionPage } from './pages/AiPredictionPage';
 import { OfficersPage } from './pages/OfficersPage';
 import { ReportsPage } from './pages/ReportsPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { LoginPage } from './pages/LoginPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 
 export function App() {
@@ -17,6 +18,7 @@ export function App() {
     <ErrorBoundary>
       <BrowserRouter>
         <Routes>
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Navigate to="/dashboard" replace />} />
             <Route path="dashboard" element={<DashboardPage />} />
@@ -36,3 +38,4 @@ export function App() {
 }
 
 export default App;
+

@@ -41,25 +41,25 @@ export const KpiCard = ({
     : value;
 
   return (
-    <div className="gov-card p-5 relative overflow-hidden group">
-      <div className="flex items-start justify-between">
+    <div className="gov-card p-5 h-36 flex flex-col justify-between relative overflow-hidden group">
+      <div className="flex items-start justify-between gap-3">
         <div>
-          <span className="text-xs font-bold text-slate-400 tracking-wider uppercase">
+          <span className="text-[11px] font-bold text-slate-400 tracking-wider uppercase block">
             {title}
           </span>
-          <div className="text-3xl font-black text-white mt-2 tracking-tight">
+          <div className="text-3xl font-black text-white mt-1.5 tracking-tight leading-none">
             {formattedValue}
           </div>
         </div>
         {Icon && (
-          <div className={`p-3 rounded-xl border ${iconBg} ${iconColor} transition-transform group-hover:scale-110`}>
-            <Icon className="w-6 h-6" />
+          <div className={`p-3 rounded-[14px] border ${iconBg} ${iconColor} transition-transform duration-300 group-hover:scale-110 shrink-0`}>
+            <Icon className="w-5 h-5" />
           </div>
         )}
       </div>
 
       {trend && (
-        <div className="mt-3 flex items-center gap-1.5 text-xs font-medium">
+        <div className="flex items-center gap-1.5 text-xs font-semibold mt-auto pt-2 border-t border-slate-700/40">
           {trendDirection === 'up' ? (
             <span className="text-emerald-400 flex items-center gap-1">
               <TrendingUp className="w-3.5 h-3.5" />
@@ -71,9 +71,10 @@ export const KpiCard = ({
               {trend}
             </span>
           )}
-          <span className="text-slate-400 text-[11px]">vs last month</span>
+          <span className="text-slate-400 text-[11px] font-normal">vs last month</span>
         </div>
       )}
     </div>
   );
 };
+

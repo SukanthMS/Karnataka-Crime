@@ -67,5 +67,15 @@ export const FIR_STATUSES = [
   "Charge Sheeted"
 ];
 
+export const CRIME_YEARS = [
+  "2026",
+  "2025",
+  "2024",
+  "2023",
+  "2022",
+  "2021"
+];
+
 export const MAP_CENTER_KARNATAKA = [15.3173, 75.7139];
 export const MAP_DEFAULT_ZOOM = 7;
+

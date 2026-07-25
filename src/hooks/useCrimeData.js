@@ -3,6 +3,10 @@ import {
   loadFirDataset,
   loadPoliceStations,
   loadDistrictGeoJSON,
+  loadDistrictCrimeMaster,
+  loadMonthlyCrimeReview,
+  loadDemographicsCensus,
+  loadNcrbIpcMaster,
   computeDashboardMetrics,
   computeMonthlyTrend,
   computeCrimeCategories,
@@ -13,6 +17,10 @@ export const useCrimeData = (selectedDistrict = 'All', selectedYear = 'All') => 
   const [firs, setFirs] = useState([]);
   const [policeStations, setPoliceStations] = useState([]);
   const [geoJSON, setGeoJSON] = useState(null);
+  const [districtMaster, setDistrictMaster] = useState([]);
+  const [monthlyReview, setMonthlyReview] = useState([]);
+  const [demographics, setDemographics] = useState([]);
+  const [ncrbMaster, setNcrbMaster] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -22,16 +30,32 @@ export const useCrimeData = (selectedDistrict = 'All', selectedYear = 'All') => 
     const fetchData = async () => {
       try {
         setLoading(true);
-        const [firData, stationData, geoData] = await Promise.all([
+        const [
+          firData,
+          stationData,
+          geoData,
+          distMasterData,
+          monthlyData,
+          demoData,
+          ncrbData
+        ] = await Promise.all([
           loadFirDataset(),
           loadPoliceStations(),
-          loadDistrictGeoJSON()
+          loadDistrictGeoJSON(),
+          loadDistrictCrimeMaster(),
+          loadMonthlyCrimeReview(),
+          loadDemographicsCensus(),
+          loadNcrbIpcMaster()
         ]);
 
         if (isMounted) {
           setFirs(firData);
           setPoliceStations(stationData);
           setGeoJSON(geoData);
+          setDistrictMaster(distMasterData);
+          setMonthlyReview(monthlyData);
+          setDemographics(demoData);
+          setNcrbMaster(ncrbData);
           setLoading(false);
         }
       } catch (err) {
@@ -58,6 +82,10 @@ export const useCrimeData = (selectedDistrict = 'All', selectedYear = 'All') => 
     firs,
     policeStations,
     geoJSON,
+    districtMaster,
+    monthlyReview,
+    demographics,
+    ncrbMaster,
     metrics,
     monthlyTrend,
     crimeCategories,
@@ -66,3 +94,4 @@ export const useCrimeData = (selectedDistrict = 'All', selectedYear = 'All') => 
     error
   };
 };
+

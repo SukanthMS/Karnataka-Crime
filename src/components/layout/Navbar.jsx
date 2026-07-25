@@ -49,14 +49,14 @@ export const Navbar = ({ searchFilter, setSearchFilter, firs = [] }) => {
     : [];
 
   return (
-    <header className="h-20 bg-[#0F172A] border-b border-[#334155] px-6 flex items-center justify-between sticky top-0 z-30 shadow-md">
+    <header className="h-20 bg-[#0F172A]/85 backdrop-blur-xl border-b border-[#334155]/60 px-6 flex items-center justify-between sticky top-0 z-30 shadow-lg">
       {/* Title & Badge */}
       <HeaderBadge title={getPageTitle()} />
 
-      {/* Center Search Input */}
-      <div className="relative w-96 hidden lg:block">
+      {/* Center Search Input (Flex 1 Auto Expand) */}
+      <div className="relative flex-1 max-w-md xl:max-w-lg mx-6 hidden lg:block">
         <div className="relative flex items-center">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3 pointer-events-none" />
+          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 pointer-events-none" />
           <input
             type="text"
             placeholder="Search FIRs, districts, stations..."
@@ -67,13 +67,13 @@ export const Navbar = ({ searchFilter, setSearchFilter, firs = [] }) => {
             }}
             onFocus={() => setShowSearchResults(true)}
             onBlur={() => setTimeout(() => setShowSearchResults(false), 200)}
-            className="w-full bg-[#1E293B] border border-[#334155] text-white text-xs rounded-xl pl-9 pr-4 py-2.5 focus:outline-none focus:border-blue-500 transition-colors placeholder:text-slate-500"
+            className="w-full bg-[#1E293B]/80 border border-[#334155]/70 text-white text-xs rounded-[14px] pl-10 pr-4 py-2.5 focus:outline-none focus:border-blue-500/80 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder:text-slate-500 font-medium"
           />
         </div>
 
         {/* Autocomplete Search Dropdown */}
         {showSearchResults && searchResults.length > 0 && (
-          <div className="absolute top-full mt-2 w-full bg-[#1E293B] border border-[#334155] rounded-xl shadow-2xl overflow-hidden z-50 py-2">
+          <div className="absolute top-full mt-2 w-full bg-[#1E293B] border border-[#334155] rounded-[14px] shadow-2xl overflow-hidden z-50 py-2">
             <div className="px-3 py-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-[#334155]">
               Quick Results ({searchResults.length})
             </div>
@@ -100,13 +100,13 @@ export const Navbar = ({ searchFilter, setSearchFilter, firs = [] }) => {
       </div>
 
       {/* Right Controls */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         {/* Live Clock Card */}
-        <div className="bg-[#1E293B] border border-[#334155] px-4 py-2 rounded-xl flex items-center gap-3 text-xs hidden sm:flex">
-          <Calendar className="w-4 h-4 text-blue-400" />
-          <div className="flex flex-col">
+        <div className="bg-[#1E293B]/70 border border-[#334155]/70 px-3.5 py-2 rounded-[14px] flex items-center gap-3 text-xs hidden sm:flex">
+          <Calendar className="w-4 h-4 text-blue-400 shrink-0" />
+          <div className="flex flex-col leading-tight">
             <span className="font-semibold text-slate-200">{dateString}</span>
-            <span className="text-[11px] text-slate-400 font-mono flex items-center gap-1">
+            <span className="text-[11px] text-slate-400 font-mono flex items-center gap-1 mt-0.5">
               <Clock className="w-3 h-3 text-amber-400 inline" />
               {timeString}
             </span>
@@ -117,15 +117,15 @@ export const Navbar = ({ searchFilter, setSearchFilter, firs = [] }) => {
         <div className="relative">
           <button
             onClick={() => setShowNotifications(!showNotifications)}
-            className="w-10 h-10 rounded-xl bg-[#1E293B] border border-[#334155] flex items-center justify-center text-slate-300 hover:text-white hover:border-slate-500 transition-colors relative"
+            className="w-10 h-10 rounded-[14px] bg-[#1E293B]/70 border border-[#334155]/70 flex items-center justify-center text-slate-300 hover:text-white hover:border-slate-500 transition-colors relative"
           >
             <Bell className="w-4 h-4" />
-            <span className="w-2 h-2 rounded-full bg-rose-500 absolute top-2 right-2 ring-2 ring-[#0F172A] animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-rose-500 absolute top-2.5 right-2.5 ring-2 ring-[#0F172A] animate-pulse" />
           </button>
 
           {/* Notifications Dropdown */}
           {showNotifications && (
-            <div className="absolute right-0 mt-2 w-80 bg-[#1E293B] border border-[#334155] rounded-xl shadow-2xl overflow-hidden z-50 p-4">
+            <div className="absolute right-0 mt-2 w-80 bg-[#1E293B] border border-[#334155] rounded-[14px] shadow-2xl overflow-hidden z-50 p-4">
               <div className="flex items-center justify-between pb-3 border-b border-[#334155]">
                 <h4 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
                   <ShieldAlert className="w-4 h-4 text-amber-500" />
@@ -163,8 +163,8 @@ export const Navbar = ({ searchFilter, setSearchFilter, firs = [] }) => {
         </div>
 
         {/* Officer Avatar Badge */}
-        <div className="flex items-center gap-3 bg-[#1E293B] border border-[#334155] p-1.5 pr-4 rounded-xl">
-          <div className="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 border border-amber-500/40 font-bold text-xs flex items-center justify-center">
+        <div className="flex items-center gap-2.5 bg-[#1E293B]/70 border border-[#334155]/70 p-1.5 pr-3.5 rounded-[14px]">
+          <div className="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 border border-amber-500/40 font-bold text-xs flex items-center justify-center shrink-0">
             OF
           </div>
           <div className="hidden xl:block text-left leading-tight">
@@ -175,13 +175,15 @@ export const Navbar = ({ searchFilter, setSearchFilter, firs = [] }) => {
 
         {/* Logout Button */}
         <button
-          onClick={() => navigate('/')}
-          className="flex items-center gap-2 px-3 py-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 rounded-xl text-xs font-bold transition-colors"
+          onClick={() => navigate('/login')}
+          className="flex items-center gap-2 px-3 py-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 rounded-[14px] text-xs font-bold transition-all"
         >
           <LogOut className="w-3.5 h-3.5" />
           <span className="hidden sm:inline">Logout</span>
         </button>
+
       </div>
     </header>
   );
 };
+
