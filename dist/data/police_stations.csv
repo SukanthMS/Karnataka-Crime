@@ -1,0 +1,31 @@
+Station_ID,Station_Name,District,Latitude,Longitude,Address,Officer_In_Charge,Phone,Status
+PS001,Cubbon Park Police Station,Bengaluru City,12.9738,77.5946,Kasturba Road, Opp Cubbon Park, Bengaluru 560001,Ins. Rajesh Gowda,+91 98450 12345,Active
+PS002,Koramangala Police Station,Bengaluru City,12.9352,77.6245,8th Block, Koramangala, Bengaluru 560095,Ins. Shilpa Patil,+91 98450 67890,On Duty
+PS003,Indiranagar Police Station,Bengaluru City,12.9784,77.6408,100 Feet Rd, Indiranagar, Bengaluru 560038,Det. A. Kulkarni,+91 98450 11223,Active
+PS004,Whitefield Police Station,Bengaluru City,12.9698,77.7499,ITPL Main Rd, Whitefield, Bengaluru 560066,Ins. Rohan Shetty,+91 98450 44556,On Duty
+PS005,Jayanagar Police Station,Bengaluru City,12.9250,77.5838,4th Block, Jayanagar, Bengaluru 560041,Ins. Sunil Kumar,+91 98450 77889,Leave
+PS006,Hebbal Police Station,Bengaluru City,13.0358,77.5970,Bellary Rd, Hebbal, Bengaluru 560024,Ins. V. Hiremath,+91 98450 99001,Active
+PS007,Yelahanka Police Station,Bengaluru City,13.1007,77.5963,NES Office Rd, Yelahanka, Bengaluru 560064,Ins. Priya Sharma,+91 98450 33445,Active
+PS008,Electronic City Police Station,Bengaluru City,12.8452,77.6602,Phase 1, Electronic City, Bengaluru 560100,Ins. Anand Rao,+91 98450 55667,On Duty
+PS009,Devaraja Police Station,Mysuru,12.3089,76.6497,Sayyaji Rao Rd, Devaraja Mohalla, Mysuru 570001,Ins. Suresh Hegde,+91 98451 12345,Active
+PS010,Lashkar Police Station,Mysuru,12.3167,76.6583,Mandi Mohalla, Mysuru 570001,Ins. Mahesh Babu,+91 98451 23456,Active
+PS011,Vidyaranyapuram Police Station,Mysuru,12.2854,76.6412,Vidyaranyapuram, Mysuru 570008,Ins. Kavitha N,+91 98451 34567,On Duty
+PS012,Camp Police Station,Belagavi,15.8569,74.5022,Camp Area, Belagavi 590001,Ins. Basavaraj Patil,+91 98452 12345,Active
+PS013,Market Police Station,Belagavi,15.8497,74.5165,Kirloskar Rd, Belagavi 590002,Ins. Santosh Jadhav,+91 98452 23456,Active
+PS014,Mangaluru North PS (Barkarke),Mangaluru,12.8700,74.8400,Barkarke, Mangaluru 575001,Ins. Guruprasad M,+91 98453 12345,Active
+PS015,Panambur Police Station,Mangaluru,12.9511,74.8086,Panambur Port Area, Mangaluru 575010,Ins. Vijay Kumar,+91 98453 23456,On Duty
+PS016,Suburban Police Station,Hubballi-Dharwad,15.3524,75.1415,Suburban Bus Stand Rd, Hubballi 580020,Ins. Mallikarjun B,+91 98454 12345,Active
+PS017,Vidyagiri Police Station,Hubballi-Dharwad,15.4412,75.0089,Vidyagiri, Dharwad 580004,Ins. Ramesh Desai,+91 98454 23456,Active
+PS018,Station Bazar Police Station,Kalaburagi,17.3297,76.8343,Station Rd, Kalaburagi 585102,Ins. Sharanappa K,+91 98455 12345,Active
+PS019,Brahampur Police Station,Kalaburagi,17.3389,76.8412,Brahampur, Kalaburagi 585105,Ins. Mohammad Ali,+91 98455 23456,On Duty
+PS020,Town Police Station,Tumakuru,13.3379,77.1006,BH Road, Tumakuru 572101,Ins. Jagadish H,+91 98456 12345,Active
+PS021,Kyatsandra Police Station,Tumakuru,13.3512,77.1345,Kyatsandra, Tumakuru 572104,Ins. Manjunath T,+91 98456 23456,Active
+PS022,Cowl Bazar Police Station,Ballari,15.1456,76.9234,Cowl Bazar, Ballari 583101,Ins. Raghavendra P,+91 98457 12345,Active
+PS023,Doddapet Police Station,Shivamogga,13.9312,75.5678,Doddapet, Shivamogga 577201,Ins. Chandrashekar S,+91 98458 12345,Active
+PS024,Town Police Station,Udupi,13.3409,74.7421,KM Marg, Udupi 576101,Ins. Ashok Kumar,+91 98459 12345,Active
+PS025,Extension Police Station,Davanagere,14.4678,75.9234,PJ Extension, Davanagere 577002,Ins. Venkatesh G,+91 98460 12345,Active
+PS026,City Police Station,Hassan,13.0075,76.1023,BM Road, Hassan 573201,Ins. K. Swamy,+91 98461 12345,Active
+PS027,Central Police Station,Mandya,12.5234,76.8956,VV Road, Mandya 571401,Ins. Nagesh Gowda,+91 98462 12345,Active
+PS028,Town Police Station,Kolar,13.1367,78.1345,MB Road, Kolar 563101,Ins. Srinivas Murthy,+91 98463 12345,Active
+PS029,Madikeri Town PS,Kodagu,12.4244,75.7382,College Road, Madikeri 571201,Ins. Bopanna C,+91 98464 12345,Active
+PS030,Town Police Station,Bagalkote,16.1856,75.6987,Old City, Bagalkote 587101,Ins. Sangamesh S,+91 98465 12345,Active
