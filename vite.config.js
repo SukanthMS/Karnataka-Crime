@@ -11,6 +11,16 @@ export default defineConfig({
   },
   server: {
     port: 5173,
-    host: true
-  }
+    host: true,
+    watch: {
+      // Exclude the nested frontend project & large JSON data files from being watched.
+      // This prevents the EBUSY (resource busy/locked) crash on Windows.
+      ignored: [
+        '**/frontend/**',
+        '**/dist/**',
+        '**/public/data/**',
+        '**/*.json',
+      ],
+    },
+  },
 });
