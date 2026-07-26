@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Shield, Lock, User, Eye, EyeOff, Sparkles, MapPin, Database, CheckCircle2, ArrowRight, BarChart3 } from 'lucide-react';
+import { Shield, Lock, User, Eye, EyeOff, Building2, Server, CheckCircle2 } from 'lucide-react';
 
 export const LoginPage = () => {
   const [username, setUsername] = useState('officer');
@@ -8,8 +8,14 @@ export const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [time, setTime] = useState(new Date());
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const timer = setInterval(() => setTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -21,94 +27,97 @@ export const LoginPage = () => {
   };
 
   return (
-    <div className="gov-bg-container min-h-screen w-full text-white flex items-center justify-center p-6 sm:p-10 relative overflow-hidden">
-      {/* Login Main Container - 60% Left Hero / 40% Right Glass Card */}
-      <div className="relative z-10 w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+    <div className="min-h-screen w-full relative flex flex-col font-sans overflow-hidden bg-gradient-to-b from-[#F8FAFC] to-[#F1F5F9] text-[#081A3A]">
+      
+      {/* Background Effects Container */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none flex items-center justify-center">
         
-        {/* Left Section (60%) */}
-        <div className="lg:col-span-7 space-y-8 pr-0 lg:pr-6">
-          <div className="space-y-4">
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-extrabold uppercase tracking-wider">
-              <img src="/karnataka_emblem.png" alt="Karnataka Emblem" className="w-5 h-5 object-contain" />
-              Government of Karnataka • Official Intelligence Portal
+        {/* 6. Background Texture (Noise + Paper finish) */}
+        <div className="absolute inset-0 opacity-[0.25]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")', mixBlendMode: 'multiply' }}></div>
+        
+        {/* 7. Subtle Vignette */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,rgba(8,26,58,0.06)_100%)]"></div>
+
+        {/* 4. Ultra-light government security pattern (Dotted Mesh) */}
+        <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(#081A3A 1.5px, transparent 1.5px)', backgroundSize: '24px 24px' }}></div>
+
+        {/* 5. Faint blueprint-style circuit lines near edges */}
+        <div className="absolute top-10 left-10 w-[300px] h-[300px] border-t-[0.5px] border-l-[0.5px] border-blue-400 opacity-[0.02]">
+          <div className="absolute top-4 left-4 w-full h-full border-t-[0.5px] border-l-[0.5px] border-blue-400"></div>
+        </div>
+        <div className="absolute top-10 right-10 w-[300px] h-[300px] border-t-[0.5px] border-r-[0.5px] border-blue-400 opacity-[0.02]">
+          <div className="absolute top-4 right-4 w-full h-full border-t-[0.5px] border-r-[0.5px] border-blue-400"></div>
+        </div>
+        <div className="absolute bottom-10 left-10 w-[300px] h-[300px] border-b-[0.5px] border-l-[0.5px] border-blue-400 opacity-[0.02]">
+          <div className="absolute bottom-4 left-4 w-full h-full border-b-[0.5px] border-l-[0.5px] border-blue-400"></div>
+        </div>
+        <div className="absolute bottom-10 right-10 w-[300px] h-[300px] border-b-[0.5px] border-r-[0.5px] border-blue-400 opacity-[0.02]">
+          <div className="absolute bottom-4 right-4 w-full h-full border-b-[0.5px] border-r-[0.5px] border-blue-400"></div>
+        </div>
+        
+        {/* 2. Subtle government watermark typography */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200vw] text-center flex flex-col items-center justify-center opacity-[0.025] blur-[10px] select-none text-[#AEBBD1] font-extrabold leading-[1.1] tracking-[22px] whitespace-nowrap">
+          <div className="text-[220px]">KARNATAKA POLICE</div>
+          <div className="text-[200px]">AI CRIME DETECTION SYSTEM</div>
+          <div className="text-[160px] mt-12 tracking-[26px]">GOVERNMENT OF KARNATAKA</div>
+        </div>
+
+        {/* 1. Large Karnataka State Emblem Watermark */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[85vh] flex items-center justify-center opacity-[0.05] blur-[30px]">
+          <img src="/karnataka_emblem.png" alt="Emblem Watermark" className="h-full w-auto object-contain grayscale" />
+        </div>
+
+        {/* 3. Soft radial white glow behind login card */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,1)_0%,rgba(219,234,254,0.6)_50%,transparent_100%)] opacity-[0.20] blur-[40px]"></div>
+      </div>
+
+      {/* Top Government Header */}
+      <header className="relative z-10 w-full bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <img src="/karnataka_emblem.png" alt="Karnataka Emblem" className="w-12 h-12 object-contain" />
+            <div>
+              <h1 className="text-lg sm:text-xl font-bold text-[#081A3A] uppercase tracking-wide">Government of Karnataka</h1>
+              <h2 className="text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-widest">Karnataka State Police</h2>
             </div>
-
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight uppercase">
-              KARNATAKA POLICE <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-blue-500">
-                AI CRIME DETECTION SYSTEM
-              </span>
-            </h1>
-
-            <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-xl font-medium">
-              Enterprise AI Powered Crime Analytics Platform for state-level predictive risk modeling, GIS incident tracking, and law enforcement intelligence.
-            </p>
           </div>
-
-          {/* 4 Premium Feature Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="gov-card p-4 flex items-start gap-3.5 hover:border-blue-500/50 transition-all">
-              <div className="w-10 h-10 rounded-[14px] bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 shrink-0 mt-0.5">
-                <Sparkles className="w-5 h-5" />
-              </div>
-              <div>
-                <h4 className="text-xs font-bold text-white uppercase tracking-wider">AI Crime Prediction</h4>
-                <p className="text-[11px] text-slate-400 mt-1 leading-snug">94.2% accuracy machine learning risk forecasting & patrol dispatch.</p>
-              </div>
+          <div className="flex flex-col items-center sm:items-end text-center sm:text-right">
+            <div className="text-sm font-bold text-[#081A3A]">
+              {time.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
             </div>
-
-            <div className="gov-card p-4 flex items-start gap-3.5 hover:border-blue-500/50 transition-all">
-              <div className="w-10 h-10 rounded-[14px] bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 shrink-0 mt-0.5">
-                <BarChart3 className="w-5 h-5" />
-              </div>
-              <div>
-                <h4 className="text-xs font-bold text-white uppercase tracking-wider">FIR Analytics</h4>
-                <p className="text-[11px] text-slate-400 mt-1 leading-snug">Incident trend analysis and multi-year historical tracking.</p>
-              </div>
-            </div>
-
-            <div className="gov-card p-4 flex items-start gap-3.5 hover:border-blue-500/50 transition-all">
-              <div className="w-10 h-10 rounded-[14px] bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0 mt-0.5">
-                <MapPin className="w-5 h-5" />
-              </div>
-              <div>
-                <h4 className="text-xs font-bold text-white uppercase tracking-wider">Crime Heat Maps</h4>
-                <p className="text-[11px] text-slate-400 mt-1 leading-snug">Real-time spatial GIS clustering across all 31 districts.</p>
-              </div>
-            </div>
-
-            <div className="gov-card p-4 flex items-start gap-3.5 hover:border-blue-500/50 transition-all">
-              <div className="w-10 h-10 rounded-[14px] bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0 mt-0.5">
-                <Shield className="w-5 h-5" />
-              </div>
-              <div>
-                <h4 className="text-xs font-bold text-white uppercase tracking-wider">Secure Government Network</h4>
-                <p className="text-[11px] text-slate-400 mt-1 leading-snug">256-bit encrypted state police intelligence pipeline.</p>
-              </div>
+            <div className="text-xs font-semibold text-slate-500 font-mono mt-0.5">
+              {time.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' })} IST
             </div>
           </div>
         </div>
+        {/* Thin gold divider */}
+        <div className="w-full h-1 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500" />
+      </header>
 
-        {/* Right Section (40%) - Floating Glass Login Card */}
-        <div className="lg:col-span-5 flex justify-center lg:justify-end">
-          <div className="gov-card p-8 w-full max-w-md shadow-2xl bg-[#0F172A]/85 backdrop-blur-2xl border border-slate-700/60 rounded-[22px]">
-            {/* Header Emblem Logo */}
-            <div className="flex flex-col items-center text-center pb-6 border-b border-slate-700/60">
-              <div className="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-xl shadow-amber-500/10 mb-3">
-                <img src="/karnataka_emblem.png" alt="State Emblem" className="w-12 h-12 object-contain" />
+      {/* Main Content - Login Card */}
+      <main className="relative z-10 flex-1 flex flex-col items-center justify-center p-6">
+        <div className="w-full max-w-[460px] bg-white/80 backdrop-blur-xl border border-slate-200/80 shadow-[0_8px_32px_rgba(8,26,58,0.08)] rounded-[24px] overflow-hidden">
+          
+          <div className="p-8 sm:p-10">
+            <div className="text-center mb-6">
+              <div className="inline-block px-3 py-1 bg-[#081A3A]/5 rounded-full text-[#081A3A] text-[10px] font-bold uppercase tracking-widest mb-3">
+                KA-AI Crime Portal
               </div>
-              <span className="text-[10px] font-extrabold tracking-wider text-amber-500 uppercase">
-                Government of Karnataka
-              </span>
-              <h2 className="text-xl font-black text-white uppercase tracking-tight mt-0.5">Officer Portal Login</h2>
-              <p className="text-xs text-slate-400 font-medium mt-1">Enter your badge credentials to authenticate</p>
+              <h2 className="text-3xl font-black text-[#081A3A] tracking-tight mb-1">
+                OFFICER LOGIN
+              </h2>
+              <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">
+                Secure Government Authentication Portal
+              </p>
             </div>
 
-            {/* Login Form */}
-            <form onSubmit={handleLogin} className="space-y-5 mt-6">
+            {/* Gold divider line */}
+            <div className="w-16 h-[3px] bg-amber-400 mx-auto rounded-full mb-8" />
+
+            <form onSubmit={handleLogin} className="space-y-5">
               <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
-                  Username / Badge ID
+                <label className="block text-xs font-bold text-[#081A3A] uppercase tracking-wider mb-1.5">
+                  Officer ID
                 </label>
                 <div className="relative flex items-center">
                   <User className="w-4 h-4 text-slate-400 absolute left-3.5 pointer-events-none" />
@@ -117,14 +126,14 @@ export const LoginPage = () => {
                     required
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Enter badge ID or username..."
-                    className="w-full bg-[#070E1E] border border-slate-700 text-white text-xs rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium"
+                    placeholder="Enter Officer ID"
+                    className="w-full bg-white border border-slate-200 text-[#081A3A] text-sm rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-[#081A3A] focus:ring-1 focus:ring-[#081A3A] transition-all font-medium placeholder:text-slate-400 shadow-sm"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
+                <label className="block text-xs font-bold text-[#081A3A] uppercase tracking-wider mb-1.5">
                   Password
                 </label>
                 <div className="relative flex items-center">
@@ -134,61 +143,114 @@ export const LoginPage = () => {
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter password..."
-                    className="w-full bg-[#070E1E] border border-slate-700 text-white text-xs rounded-xl pl-10 pr-10 py-3 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium"
+                    placeholder="Enter Password"
+                    className="w-full bg-white border border-slate-200 text-[#081A3A] text-sm rounded-xl pl-10 pr-10 py-3 focus:outline-none focus:border-[#081A3A] focus:ring-1 focus:ring-[#081A3A] transition-all font-medium placeholder:text-slate-400 shadow-sm"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3.5 text-slate-400 hover:text-white transition-colors"
+                    className="absolute right-3.5 text-slate-400 hover:text-[#081A3A] transition-colors"
                   >
                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
               </div>
 
-              {/* Remember Me & Forgot Password */}
-              <div className="flex items-center justify-between text-xs">
-                <label className="flex items-center gap-2 cursor-pointer text-slate-300 font-medium">
+              <div className="flex items-center justify-between text-xs pt-1">
+                <label className="flex items-center gap-2 cursor-pointer text-slate-600 font-medium">
                   <input
                     type="checkbox"
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
-                    className="w-4 h-4 rounded border-slate-700 bg-[#070E1E] text-blue-600 focus:ring-blue-500"
+                    className="w-4 h-4 rounded border-slate-300 text-[#081A3A] focus:ring-[#081A3A]"
                   />
-                  Remember badge session
+                  Remember Me
                 </label>
-                <a href="#forgot" onClick={(e) => { e.preventDefault(); alert("Please contact Karnataka State Police System Admin to reset badge password."); }} className="text-blue-400 hover:text-blue-300 font-semibold transition-colors">
+                <a href="#forgot" onClick={(e) => { e.preventDefault(); alert("Please contact Karnataka State Police System Admin to reset password."); }} className="text-[#081A3A] hover:text-blue-700 font-bold transition-colors">
                   Forgot Password?
                 </a>
               </div>
 
-              {/* Sign In Button */}
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-blue-600/25 flex items-center justify-center gap-2 text-xs uppercase tracking-wider transition-all transform active:scale-95"
+                className="w-full mt-2 bg-[#081A3A] hover:bg-[#0a234f] text-white font-bold py-3.5 px-4 rounded-xl shadow-[0_4px_14px_rgba(8,26,58,0.25)] hover:shadow-[0_0_20px_rgba(251,191,36,0.35)] flex items-center justify-center gap-2 text-sm uppercase tracking-widest transition-all duration-300 border border-transparent hover:border-amber-400/50 active:scale-[0.98]"
               >
-                {loading ? (
-                  <span>Authenticating Credentials...</span>
-                ) : (
-                  <>
-                    <span>Sign In To Dashboard</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </>
-                )}
+                {loading ? 'Authenticating...' : 'LOGIN'}
               </button>
             </form>
 
-            {/* Bottom Security Notice */}
-            <div className="mt-6 pt-4 border-t border-slate-700/50 flex items-center justify-center gap-2 text-[11px] text-slate-400 font-medium">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span>Secure Government Network • 256-Bit Encrypted • Official Karnataka Police</span>
+            <div className="mt-8 pt-6 border-t border-slate-200 flex flex-col items-center justify-center gap-2">
+              <Shield className="w-5 h-5 text-slate-400" />
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                Authorized Personnel Only
+              </span>
             </div>
           </div>
         </div>
-      </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="relative z-10 w-full bg-white border-t border-slate-200 mt-auto">
+        <div className="max-w-7xl mx-auto px-6 py-8">
+          {/* 4 Info Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-[#081A3A] shrink-0">
+                <Building2 className="w-4 h-4" />
+              </div>
+              <div>
+                <h4 className="text-xs font-bold text-[#081A3A] uppercase tracking-wider">National Informatics Centre</h4>
+                <p className="text-[10px] text-slate-500 mt-0.5 font-medium leading-relaxed">Technical Infrastructure Partner</p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-[#081A3A] shrink-0">
+                <Shield className="w-4 h-4" />
+              </div>
+              <div>
+                <h4 className="text-xs font-bold text-[#081A3A] uppercase tracking-wider">Karnataka State Police</h4>
+                <p className="text-[10px] text-slate-500 mt-0.5 font-medium leading-relaxed">Law Enforcement Command</p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-[#081A3A] shrink-0">
+                <Server className="w-4 h-4" />
+              </div>
+              <div>
+                <h4 className="text-xs font-bold text-[#081A3A] uppercase tracking-wider">Secure Government Network</h4>
+                <p className="text-[10px] text-slate-500 mt-0.5 font-medium leading-relaxed">Encrypted Intranet Gateway</p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center text-[#081A3A] shrink-0">
+                <CheckCircle2 className="w-4 h-4" />
+              </div>
+              <div>
+                <h4 className="text-xs font-bold text-[#081A3A] uppercase tracking-wider">AI Crime Detection Platform</h4>
+                <p className="text-[10px] text-slate-500 mt-0.5 font-medium leading-relaxed">Predictive Analytics Engine</p>
+              </div>
+            </div>
+            
+          </div>
+
+          {/* Bottom Footer Links */}
+          <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="text-xs font-bold text-slate-500">
+              © {new Date().getFullYear()} Government of Karnataka
+            </div>
+            <div className="flex items-center gap-6 text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider flex-wrap justify-center">
+              <a href="#terms" onClick={e=>e.preventDefault()} className="hover:text-[#081A3A] transition-colors">Terms of Use</a>
+              <a href="#privacy" onClick={e=>e.preventDefault()} className="hover:text-[#081A3A] transition-colors">Privacy Policy</a>
+              <a href="#accessibility" onClick={e=>e.preventDefault()} className="hover:text-[#081A3A] transition-colors">Accessibility</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
-

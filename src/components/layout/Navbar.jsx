@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Bell, LogOut, Calendar, Clock, ShieldAlert, CheckCircle2, Info } from 'lucide-react';
+import { Search, Bell, LogOut, Calendar, Clock, ShieldAlert, CheckCircle2, Info, Moon, Sun } from 'lucide-react';
 import { HeaderBadge } from '../common/HeaderBadge';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useSettings } from '../../contexts/SettingsContext';
 
 export const Navbar = ({ searchFilter, setSearchFilter, firs = [] }) => {
   const [timeString, setTimeString] = useState('');
   const [dateString, setDateString] = useState('');
   const [showNotifications, setShowNotifications] = useState(false);
   const [showSearchResults, setShowSearchResults] = useState(false);
+  const { theme, toggleTheme } = useSettings();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -161,6 +163,29 @@ export const Navbar = ({ searchFilter, setSearchFilter, firs = [] }) => {
             </div>
           )}
         </div>
+
+        {/* Theme Toggle (Pill Switch) */}
+        <button
+          onClick={toggleTheme}
+          className="relative w-[52px] h-[28px] rounded-full bg-[#1E293B]/70 border border-[#334155]/70 flex items-center p-1 transition-colors duration-300 hover:border-slate-500 focus:outline-none"
+          title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
+        >
+          <div className="absolute flex justify-between w-full px-[5px] pointer-events-none">
+            <Moon className="w-3.5 h-3.5 text-slate-400" />
+            <Sun className="w-3.5 h-3.5 text-slate-400" />
+          </div>
+          <div
+            className={`w-5 h-5 rounded-full bg-white shadow-md transform transition-transform duration-300 flex items-center justify-center z-10 ${
+              theme === 'dark' ? 'translate-x-0' : 'translate-x-[24px]'
+            }`}
+          >
+            {theme === 'dark' ? (
+              <Moon className="w-3 h-3 text-slate-800" />
+            ) : (
+              <Sun className="w-3 h-3 text-amber-500" />
+            )}
+          </div>
+        </button>
 
         {/* Officer Avatar Badge */}
         <div className="flex items-center gap-2.5 bg-[#1E293B]/70 border border-[#334155]/70 p-1.5 pr-3.5 rounded-[14px]">

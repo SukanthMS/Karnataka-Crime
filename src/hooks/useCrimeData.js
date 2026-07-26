@@ -12,8 +12,11 @@ import {
   computeCrimeCategories,
   computeTopDistricts
 } from '../services/csvDataLoader';
+import { useSettings } from '../contexts/SettingsContext';
 
 export const useCrimeData = (selectedDistrict = 'All', selectedYear = 'All') => {
+  const { aiThresholds } = useSettings();
+  
   const [firs, setFirs] = useState([]);
   const [policeStations, setPoliceStations] = useState([]);
   const [geoJSON, setGeoJSON] = useState(null);
@@ -73,10 +76,10 @@ export const useCrimeData = (selectedDistrict = 'All', selectedYear = 'All') => 
     };
   }, []);
 
-  const metrics = computeDashboardMetrics(firs, selectedDistrict, selectedYear);
+  const metrics = computeDashboardMetrics(firs, selectedDistrict, selectedYear, aiThresholds);
   const monthlyTrend = computeMonthlyTrend(firs);
   const crimeCategories = computeCrimeCategories(firs);
-  const topDistricts = computeTopDistricts(firs);
+  const topDistricts = computeTopDistricts(firs, aiThresholds);
 
   return {
     firs,

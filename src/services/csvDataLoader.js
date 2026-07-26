@@ -143,7 +143,7 @@ export const loadNcrbIpcMaster = async () => {
 /**
  * Compute key dashboard metrics dynamically from FIR dataset
  */
-export const computeDashboardMetrics = (firs, selectedDistrict = 'All', selectedYear = 'All') => {
+export const computeDashboardMetrics = (firs, selectedDistrict = 'All', selectedYear = 'All', aiThresholds) => {
   if (!firs || firs.length === 0) {
     return {
       totalCrimes: 1674734,
@@ -178,7 +178,11 @@ export const computeDashboardMetrics = (firs, selectedDistrict = 'All', selected
   });
 
   const hotspotDistrict = Object.entries(districtCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || 'Bengaluru City';
-  const highRiskCount = Object.values(districtCounts).filter(c => c > 100).length || 41;
+  
+  const highRiskCount = Object.values(districtCounts).filter(c => {
+    const scaleCount = c * 300;
+    return aiThresholds ? (scaleCount >= aiThresholds.criticalThreshold) : (c > 100);
+  }).length || 41;
 
   // Group by Crime Type
   const typeCounts = {};
@@ -284,10 +288,7 @@ export const computeCrimeCategories = (firs) => {
   });
 };
 
-/**
- * Compute Top 10 Dangerous Districts
- */
-export const computeTopDistricts = (firs) => {
+export const computeTopDistricts = (firs, aiThresholds) => {
   const districtCounts = {};
   firs.forEach(f => {
     districtCounts[f.District] = (districtCounts[f.District] || 0) + 1;
@@ -299,11 +300,23 @@ export const computeTopDistricts = (firs) => {
 
   return sorted.map(([name, count], idx) => {
     const scaleCount = baseScales[idx] || (count * 300);
+    
+    let riskLevel = 'MEDIUM';
+    if (aiThresholds) {
+      if (scaleCount >= aiThresholds.criticalThreshold) {
+        riskLevel = 'CRITICAL';
+      } else if (scaleCount >= (aiThresholds.criticalThreshold * 0.7)) {
+        riskLevel = 'HIGH';
+      }
+    } else {
+      riskLevel = idx < 3 ? 'CRITICAL' : idx < 7 ? 'HIGH' : 'MEDIUM';
+    }
+
     return {
       rank: idx + 1,
       district: name,
       firsCount: scaleCount,
-      riskLevel: idx < 3 ? 'CRITICAL' : idx < 7 ? 'HIGH' : 'MEDIUM'
+      riskLevel
     };
   });
 };

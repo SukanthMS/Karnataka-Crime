@@ -20,13 +20,15 @@ import {
 } from 'recharts';
 import { useCrimeData } from '../hooks/useCrimeData';
 import { LoadingSkeleton } from '../components/common/LoadingSkeleton';
+import { useSettings } from '../contexts/SettingsContext';
 
 export const AiPredictionPage = () => {
   const [selectedModel, setSelectedModel] = useState('LSTM');
   const { topDistricts, loading } = useCrimeData();
+  const { aiThresholds } = useSettings();
 
-  // Synthetic prediction forecasting curve data
-  const predictionChartData = [
+  // Synthetic prediction forecasting curve data connected to settings window
+  const baseData = [
     { month: 'Jan 2026', historical: 18400, forecast: 18400 },
     { month: 'Feb 2026', historical: 19200, forecast: 19200 },
     { month: 'Mar 2026', historical: 20100, forecast: 20100 },
@@ -34,20 +36,33 @@ export const AiPredictionPage = () => {
     { month: 'May 2026', historical: 21500, forecast: 21500 },
     { month: 'Jun 2026', historical: 22100, forecast: 22100 },
     { month: 'Jul 2026', historical: 21900, forecast: 21900 },
-    { month: 'Aug 2026 (Pred)', historical: null, forecast: 22800 },
-    { month: 'Sep 2026 (Pred)', historical: null, forecast: 23400 },
-    { month: 'Oct 2026 (Pred)', historical: null, forecast: 24100 },
   ];
+  
+  const futureMonths = ['Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
+  const futurePredictions = Array.from({ length: aiThresholds.predictionMonths }).map((_, i) => ({
+      month: `${futureMonths[i]} 2026 (Pred)`, historical: null, forecast: 21900 + (i+1)*(200 + aiThresholds.zScore*100)
+  }));
+  const predictionChartData = [...baseData, ...futurePredictions];
 
   const predictionTable = topDistricts.map((d, i) => {
-    const growth = (7.5 - i * 0.4).toFixed(1);
+    const growthNum = (7.5 - i * 0.4) + (aiThresholds.zScore * 0.5);
+    const growth = growthNum.toFixed(1);
     const predicted = Math.round(d.firsCount * (1 + parseFloat(growth) / 100));
+    
+    // Apply Settings AI thresholds
+    let risk = 'WATCH';
+    if (d.firsCount >= aiThresholds.criticalThreshold) {
+        risk = 'CRITICAL';
+    } else if (parseFloat(growth) >= (aiThresholds.alertIncrease / 2)) {
+        risk = 'HIGH RISK';
+    }
+
     return {
       ...d,
       predicted,
       growth: `+${growth}%`,
-      risk: d.riskLevel,
-      action: i < 3 ? 'Deploy Patrol Units & Night Watch' : 'Increase Static Checkposts'
+      risk: risk,
+      action: risk === 'CRITICAL' ? 'Deploy Patrol Units & Night Watch' : 'Increase Static Checkposts'
     };
   });
 

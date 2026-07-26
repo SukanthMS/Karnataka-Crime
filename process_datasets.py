@@ -2,6 +2,7 @@ import os
 import glob
 import json
 import random
+import math
 import pandas as pd
 import numpy as np
 
@@ -50,10 +51,18 @@ if os.path.exists(monthly_path):
 # 5. NCRB IPC Master Dataset
 ncrb_path = os.path.join(DATASETS_DIR, "Karnataka_Crime_Master_Dataset.csv")
 if os.path.exists(ncrb_path):
-    df_ncrb = pd.read_csv(ncrb_path)
-    output_ncrb = os.path.join(OUTPUT_DIR, "ncrb_ipc_master.json")
-    df_ncrb.to_json(output_ncrb, orient="records", indent=2)
-    print(f"[5/7] Linked NCRB IPC Master -> {output_ncrb}")
+    df_ncrb = pd.read_csv(ncrb_path, low_memory=False)
+    records = df_ncrb.to_dict(orient="records")
+    num_parts = 10
+    chunk_size = math.ceil(len(records) / num_parts)
+    for i in range(num_parts):
+        part_path = os.path.join(OUTPUT_DIR, f"ncrb_ipc_master_part_{i+1}.json")
+        with open(part_path, "w", encoding="utf-8") as f:
+            json.dump(records[i*chunk_size : (i+1)*chunk_size], f, indent=2)
+    single_path = os.path.join(OUTPUT_DIR, "ncrb_ipc_master.json")
+    if os.path.exists(single_path):
+        os.remove(single_path)
+    print(f"[5/7] Linked NCRB IPC Master -> 10 split JSON parts in {OUTPUT_DIR}")
 
 # 6. Police Locations (~1,100 stations)
 police_path = os.path.join(DATASETS_DIR, "Karnataka_All_Police_Locations (2).csv")

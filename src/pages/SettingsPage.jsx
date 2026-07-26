@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Settings as SettingsIcon,
   ShieldCheck,
@@ -10,8 +10,11 @@ import {
   CheckCircle2,
   Sliders
 } from 'lucide-react';
+import { useSettings } from '../contexts/SettingsContext';
 
 export const SettingsPage = () => {
+  const { aiThresholds, updateAiThresholds } = useSettings();
+  
   const [model, setModel] = useState('LSTM');
   const [syncing, setSyncing] = useState(false);
   const [alertsEnabled, setAlertsEnabled] = useState(true);
@@ -19,12 +22,35 @@ export const SettingsPage = () => {
   const [autoRefreshGis, setAutoRefreshGis] = useState(false);
   const [syncedTime, setSyncedTime] = useState(new Date().toLocaleTimeString());
 
+  // Temp threshold state for the sliders
+  const [tempThresholds, setTempThresholds] = useState(aiThresholds);
+  const [showToast, setShowToast] = useState(false);
+
+  useEffect(() => {
+    // If aiThresholds change externally, sync local state
+    setTempThresholds(aiThresholds);
+  }, [aiThresholds]);
+
   const handleSyncDatabase = () => {
     setSyncing(true);
     setTimeout(() => {
       setSyncing(false);
       setSyncedTime(new Date().toLocaleTimeString());
     }, 1500);
+  };
+
+  const handleSaveThresholds = () => {
+    updateAiThresholds(tempThresholds);
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 3000);
+  };
+
+  const handleResetThresholds = () => {
+    const defaults = { alertIncrease: 20, criticalThreshold: 500, zScore: 2, predictionMonths: 3 };
+    setTempThresholds(defaults);
+    updateAiThresholds(defaults);
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 3000);
   };
 
   return (
@@ -198,6 +224,126 @@ export const SettingsPage = () => {
           </div>
         </div>
       </div>
+
+      {/* AI Risk Threshold Configuration */}
+      <div className="gov-card p-6 space-y-6">
+        <div className="flex items-center gap-3 pb-3 border-b border-[#334155]">
+          <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400">
+            <Sliders className="w-4 h-4" />
+          </div>
+          <div>
+            <h3 className="text-sm font-bold text-white uppercase tracking-wider">AI Risk Threshold Configuration</h3>
+            <p className="text-[11px] text-slate-400">Configure AI detection thresholds used across dashboard predictions and alerts.</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Sliders */}
+          <div className="space-y-6">
+            <div>
+              <div className="flex justify-between mb-1">
+                <span className="text-xs font-bold text-slate-300">Alert when district crime rate increases by</span>
+                <span className="text-xs font-bold text-blue-400">{tempThresholds.alertIncrease}%</span>
+              </div>
+              <input
+                type="range" min="0" max="50"
+                value={tempThresholds.alertIncrease}
+                onChange={(e) => setTempThresholds({...tempThresholds, alertIncrease: Number(e.target.value)})}
+                className="w-full h-2 bg-[#1E293B] rounded-lg appearance-none cursor-pointer accent-blue-500"
+              />
+            </div>
+
+            <div>
+              <div className="flex justify-between mb-1">
+                <span className="text-xs font-bold text-slate-300">Mark district as CRITICAL when crime rate exceeds</span>
+                <span className="text-xs font-bold text-amber-400">{tempThresholds.criticalThreshold}</span>
+              </div>
+              <input
+                type="range" min="100" max="1000" step="10"
+                value={tempThresholds.criticalThreshold}
+                onChange={(e) => setTempThresholds({...tempThresholds, criticalThreshold: Number(e.target.value)})}
+                className="w-full h-2 bg-[#1E293B] rounded-lg appearance-none cursor-pointer accent-amber-500"
+              />
+            </div>
+
+            <div>
+              <div className="flex justify-between mb-1">
+                <span className="text-xs font-bold text-slate-300">Z-score threshold for anomaly detection</span>
+                <span className="text-xs font-bold text-rose-400">{tempThresholds.zScore}</span>
+              </div>
+              <input
+                type="range" min="1" max="5" step="0.1"
+                value={tempThresholds.zScore}
+                onChange={(e) => setTempThresholds({...tempThresholds, zScore: Number(e.target.value)})}
+                className="w-full h-2 bg-[#1E293B] rounded-lg appearance-none cursor-pointer accent-rose-500"
+              />
+            </div>
+
+            <div>
+              <div className="flex justify-between mb-1">
+                <span className="text-xs font-bold text-slate-300">Months ahead for AI Prediction</span>
+                <span className="text-xs font-bold text-emerald-400">{tempThresholds.predictionMonths} Months</span>
+              </div>
+              <input
+                type="range" min="1" max="12"
+                value={tempThresholds.predictionMonths}
+                onChange={(e) => setTempThresholds({...tempThresholds, predictionMonths: Number(e.target.value)})}
+                className="w-full h-2 bg-[#1E293B] rounded-lg appearance-none cursor-pointer accent-emerald-500"
+              />
+            </div>
+          </div>
+
+          {/* Live Preview Card & Actions */}
+          <div className="space-y-6">
+            <div className="bg-[#0F172A] border border-[#334155] rounded-xl p-5 shadow-inner">
+              <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4 pb-2 border-b border-[#334155]/60">
+                Current AI Threshold Summary
+              </h4>
+              <div className="space-y-3 text-xs">
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Alert Increase</span>
+                  <span className="font-bold text-blue-400">{tempThresholds.alertIncrease}%</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Critical Threshold</span>
+                  <span className="font-bold text-amber-400">{tempThresholds.criticalThreshold}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Z Score</span>
+                  <span className="font-bold text-rose-400">{tempThresholds.zScore}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Prediction Window</span>
+                  <span className="font-bold text-emerald-400">{tempThresholds.predictionMonths} Months</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex gap-3">
+              <button
+                onClick={handleSaveThresholds}
+                className="flex-1 bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-700 hover:from-blue-600 hover:to-indigo-600 text-white font-bold py-2.5 px-4 rounded-xl shadow-lg border border-transparent transition-all text-xs uppercase tracking-wider"
+              >
+                Save Thresholds
+              </button>
+              <button
+                onClick={handleResetThresholds}
+                className="flex-1 bg-[#0F172A] hover:bg-[#1E293B] text-slate-300 border border-[#334155] hover:border-slate-500 font-bold py-2.5 px-4 rounded-xl transition-all text-xs uppercase tracking-wider"
+              >
+                Reset To Defaults
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Toast Notification */}
+      {showToast && (
+        <div className="fixed bottom-6 right-6 bg-emerald-500/90 text-white px-6 py-3 rounded-xl shadow-2xl flex items-center gap-3 backdrop-blur-md border border-emerald-400/50 animate-bounce">
+          <CheckCircle2 className="w-5 h-5" />
+          <span className="font-bold text-sm">AI Thresholds Updated Successfully</span>
+        </div>
+      )}
     </div>
   );
 };
